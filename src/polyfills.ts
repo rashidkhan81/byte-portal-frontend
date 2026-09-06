@@ -45,6 +45,7 @@
 /***************************************************************************************************
  * Zone JS is required by default for Angular itself.
  */
+(globalThis as typeof globalThis & { global?: typeof globalThis }).global = globalThis;
 import 'zone.js';  // Included with Angular CLI.
 
 

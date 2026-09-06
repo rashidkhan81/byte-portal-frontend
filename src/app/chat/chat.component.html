@@ -1,0 +1,9 @@
+<main class="chat-page">
+  <header class="chat-header"><a class="brand" routerLink="/"><span class="brand-mark">B</span><span>byte<span>portal</span></span></a><a class="back-link" routerLink="/provider/messages">&#8592; Back to messages</a></header>
+  <section class="chat-shell">
+    <div class="chat-title"><div><p class="kicker">Private conversation</p><h1>{{ conversation?.application?.job?.title || 'Conversation' }}</h1><p *ngIf="conversation">{{ conversation.seeker.name }} <span>&middot;</span> {{ conversation.provider.name }}</p></div><span class="connection-status" [class.connected]="isConnected"><i></i>{{ isConnected ? 'Live' : 'Connecting' }}</span></div>
+    <p class="chat-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+    <div class="message-list" aria-live="polite"><p class="loading-copy" *ngIf="isLoading">Loading message history...</p><p class="empty-copy" *ngIf="!isLoading && !messages.length">No messages yet. Start the conversation.</p><article class="message" *ngFor="let message of messages" [class.own-message]="isOwnMessage(message)"><span class="message-avatar">{{ message.senderName.charAt(0) }}</span><div class="message-body"><small><strong>{{ message.senderName }}</strong><span>{{ messageLabel(message) }} · {{ message.createdAt | date:'shortTime' }}</span></small><p>{{ message.content }}</p></div></article></div>
+    <form class="composer" (ngSubmit)="sendMessage()"><label class="visually-hidden" for="message">Message</label><input id="message" name="message" [(ngModel)]="messageText" placeholder="Write a message..." autocomplete="off"><button type="submit" [disabled]="!messageText.trim()" aria-label="Send message">&#8594;</button></form>
+  </section>
+</main>

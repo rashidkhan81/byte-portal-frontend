@@ -1,0 +1,107 @@
+<main class="home-page">
+  <header class="site-header">
+    <a class="brand" routerLink="/" aria-label="BytePortal home">
+      <span class="brand-mark">B</span>
+      <span>byte<span>portal</span></span>
+    </a>
+
+    <nav class="desktop-nav" aria-label="Primary navigation">
+      <a routerLink="/jobs">Find opportunities</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#community">Community</a>
+    </nav>
+
+    <nav class="mobile-nav" aria-label="Mobile navigation">
+      <a href="#opportunities">Opportunities</a>
+      <a href="#how-it-works">How it works</a>
+      <a href="#community">Community</a>
+    </nav>
+
+    <div class="header-actions">
+      <a class="login-link" routerLink="/login">Log in</a>
+      <a class="button button-dark button-small" routerLink="/register">Join BytePortal <span aria-hidden="true">&#8599;</span></a>
+    </div>
+  </header>
+
+  <section class="hero-section" aria-labelledby="hero-title">
+    <div class="hero-copy">
+      <p class="eyebrow"><span class="eyebrow-dot"></span> The career network for people who build</p>
+      <h1 id="hero-title">Your next good<br><em>move</em> starts here.</h1>
+      <p class="hero-description">BytePortal brings ambitious talent and thoughtful teams together around work that matters.</p>
+
+      <form class="search-panel" (ngSubmit)="searchJobs()">
+        <label class="search-field">
+          <span class="field-icon" aria-hidden="true">&#8981;</span>
+          <span class="visually-hidden">Search jobs or skills</span>
+          <input type="search" name="search" [(ngModel)]="searchQuery" placeholder="Job title, skill, or keyword">
+        </label>
+        <label class="search-field location-field">
+          <span class="field-icon" aria-hidden="true">&#9678;</span>
+          <span class="visually-hidden">Search location</span>
+          <input type="text" name="location" [(ngModel)]="locationQuery" placeholder="Location or remote">
+        </label>
+        <button class="button button-teal search-button" type="submit">Search jobs <span aria-hidden="true">&#8594;</span></button>
+      </form>
+
+      <p class="search-hint">Popular: <a href="#roles">Product designer</a><a href="#roles">Frontend engineer</a><a href="#roles">Data analyst</a></p>
+    </div>
+
+    <div class="hero-visual" aria-label="A snapshot of the BytePortal community">
+      <div class="visual-grid"></div>
+      <div class="floating-note note-top"><span class="note-icon">&#10003;</span><span><strong>Good work</strong><small>finds good people</small></span></div>
+      <div class="profile-card">
+        <div class="profile-header"><span class="status-dot"></span><span>New match</span><span class="card-menu">...</span></div>
+        <div class="avatar avatar-orange">RK</div>
+        <h2>Rasid Khan</h2>
+        <p>Java Developer <span>&middot;</span> London</p>
+        <div class="skill-list"><span>Product thinking</span><span>UX research</span><span>Systems</span></div>
+        <div class="match-row"><div class="mini-avatars"><span class="mini-avatar teal">J</span><span class="mini-avatar purple">R</span><span class="mini-avatar yellow">S</span></div><span>12 people in your orbit</span></div>
+      </div>
+      <div class="floating-note note-bottom"><span class="pulse-bars"><i></i><i></i><i></i><i></i></span><span><strong>2,480</strong><small>new roles this week</small></span></div>
+    </div>
+  </section>
+
+  <section class="trust-strip" aria-label="BytePortal highlights">
+    <p>Built for the people behind the work</p>
+    <div class="trust-items"><span><b>4.9</b> average experience</span><span><b>18k+</b> active members</span><span><b>92%</b> find a relevant match</span></div>
+  </section>
+
+  <section class="public-jobs-section" id="public-jobs" aria-labelledby="public-jobs-title">
+    <div class="public-jobs-heading">
+      <div><p class="eyebrow"><span class="eyebrow-dot"></span> Fresh opportunities</p><h2 id="public-jobs-title">Find your next<br><em>good move.</em></h2></div>
+      <a class="text-link" routerLink="/jobs">View all jobs <span>&#8594;</span></a>
+    </div>
+    <p class="jobs-status" *ngIf="jobsLoading">Loading open jobs...</p>
+    <p class="jobs-status jobs-error" *ngIf="jobsError">{{ jobsError }}</p>
+    <div class="public-job-grid">
+      <a class="public-job-card" *ngFor="let job of jobs" [routerLink]="['/jobs', job.id]">
+        <span class="job-card-type">{{ job.employmentType }} <b>&middot;</b> {{ job.status }}</span>
+        <h3>{{ job.title }}</h3>
+        <p>{{ job.provider.name }} <span>&middot;</span> {{ job.location || 'Location flexible' }}</p>
+        <div><strong>{{ job.salary || 'Salary open' }}</strong><span>View role &#8594;</span></div>
+      </a>
+    </div>
+    <p class="jobs-status" *ngIf="!jobsLoading && !jobsError && !jobs.length">No open jobs are available right now.</p>
+    <div class="jobs-pagination" *ngIf="jobsTotalPages > 1"><button type="button" (click)="previousJobsPage()" [disabled]="jobsPage === 0">&#8592; Previous</button><span>Page {{ jobsPage + 1 }} of {{ jobsTotalPages }}</span><button type="button" (click)="nextJobsPage()" [disabled]="jobsPage + 1 >= jobsTotalPages">Next &#8594;</button></div>
+  </section>
+
+  <section class="pathways-section" id="opportunities" aria-labelledby="pathways-title">
+    <div class="section-heading"><div><p class="eyebrow">One platform, two ways forward</p><h2 id="pathways-title">Make your next move<br><em>count.</em></h2></div><p>Whether you are looking for the right person or the right place to grow, BytePortal keeps the human part of work in focus.</p></div>
+    <div class="pathway-grid">
+      <a class="pathway-card seeker-card" routerLink="/jobs"><span class="card-number">01</span><span class="pathway-arrow">&#8599;</span><h3>Find work<br>that fits you.</h3><p>Discover roles, teams, and projects matched to how you want to work.</p><span class="card-link">Explore opportunities <span>&#8594;</span></span></a>
+      <a class="pathway-card provider-card" href="#hire-talent"><span class="card-number">02</span><span class="pathway-arrow">&#8599;</span><h3>Meet people<br>who get it.</h3><p>Build your team with capable people who care about the details.</p><span class="card-link">Find your next hire <span>&#8594;</span></span></a>
+    </div>
+  </section>
+
+  <section class="process-section" id="how-it-works" aria-labelledby="process-title">
+    <div class="process-intro"><p class="eyebrow">A better way to connect</p><h2 id="process-title">Less noise.<br><em>More signal.</em></h2><a class="text-link" href="#signup">See how it works <span>&#8594;</span></a></div>
+    <div class="process-list"><article><span>01</span><div><h3>Show up as yourself</h3><p>Your profile is more than a CV. Share what you care about, how you think, and what you are looking for next.</p></div></article><article><span>02</span><div><h3>Find your people</h3><p>Smart matching connects you with roles and people based on values, strengths, and real potential.</p></div></article><article><span>03</span><div><h3>Build something good</h3><p>Move from first conversation to meaningful work with tools that keep everyone in sync.</p></div></article></div>
+  </section>
+
+  <section class="community-banner" id="community"><div><p class="eyebrow">The BytePortal community</p><h2>There is room<br>for <em>your</em> way of working.</h2></div><a class="button button-light" routerLink="/register">Create your profile <span aria-hidden="true">&#8599;</span></a></section>
+
+  <footer class="site-footer">
+    <div class="footer-main"><a class="brand footer-brand" routerLink="/"><span class="brand-mark">B</span><span>byte<span>portal</span></span></a><p>Make work feel more human.</p></div>
+    <div class="footer-links"><a href="#about">About</a><a href="#privacy">Privacy</a><a href="#contact">Contact</a><span>&copy; 2024 BytePortal</span></div>
+  </footer>
+</main>

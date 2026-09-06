@@ -1,0 +1,22 @@
+<main class="auth-page">
+  <aside class="auth-aside">
+    <a class="brand auth-brand" routerLink="/" aria-label="BytePortal home"><span class="brand-mark">B</span><span>byte<span>portal</span></span></a>
+    <div class="auth-aside-copy"><p class="eyebrow"><span class="eyebrow-dot"></span> Start your next chapter</p><h1>Bring your<br>best work<br><em>to life.</em></h1><p>Join a community built around meaningful work, honest connections, and better possibilities.</p></div>
+    <p class="auth-aside-footer">The career network for people who build.</p>
+  </aside>
+
+  <section class="auth-form-area" aria-labelledby="register-title">
+    <div class="auth-card">
+      <div class="auth-card-header"><h2 id="register-title">Create your account.</h2><p>Tell us a little about yourself to get started.</p></div>
+      <form class="auth-form" #registerForm="ngForm" (ngSubmit)="submit(registerForm)" novalidate>
+        <div class="form-field"><label for="name">Full name</label><input id="name" name="name" type="text" [(ngModel)]="name" #nameField="ngModel" required minlength="2" maxlength="100" autocomplete="name" placeholder="Your name"><span class="field-hint" *ngIf="nameField.invalid && nameField.touched">Name must be at least 2 characters.</span></div>
+        <div class="form-field"><label for="register-email">Email address</label><input id="register-email" name="email" type="email" [(ngModel)]="email" #emailField="ngModel" required email autocomplete="email" placeholder="you@example.com"><span class="field-hint" *ngIf="emailField.invalid && emailField.touched">Enter a valid email address.</span></div>
+        <div class="form-field"><label for="register-password">Password</label><input id="register-password" name="password" type="password" [(ngModel)]="password" #passwordField="ngModel" required minlength="8" autocomplete="new-password" placeholder="At least 8 characters"><span class="field-hint" *ngIf="passwordField.invalid && passwordField.touched">Password must be at least 8 characters.</span></div>
+        <fieldset class="form-field"><legend>What brings you to BytePortal?</legend><div class="role-options"><label class="role-option"><input type="radio" name="role" [(ngModel)]="role" value="JOB_SEEKER"><strong>I'm looking for work</strong><small>Explore roles and find your next opportunity.</small></label><label class="role-option"><input type="radio" name="role" [(ngModel)]="role" value="JOB_PROVIDER"><strong>I'm hiring talent</strong><small>Meet people who can move your team forward.</small></label></div></fieldset>
+        <p class="auth-error" *ngIf="errorMessage" role="alert">{{ errorMessage }}</p>
+        <button class="auth-submit" type="submit" [disabled]="isSubmitting">{{ isSubmitting ? 'Creating your account...' : 'Create my account' }} <span aria-hidden="true">&#8594;</span></button>
+      </form>
+      <p class="auth-switch">Already have an account? <a routerLink="/login">Log in</a></p>
+    </div>
+  </section>
+</main>
